@@ -1,14 +1,3 @@
-
-
-
-
-#esciribir una funcion que reciba un archivo e intente leer los datos
-#del siguiente enemigo si8 no hay mas enemigos debe devolver none
-#si hay un enemigo  devuelbve una lista de 4 valores : nombre, vida
-#daño,probabilidad de daño golpe ,menos el nombre de los otros
-#valores debe ser insts
-
-
 import random
 
 
@@ -29,6 +18,7 @@ def calcularAtaque(prob, fuerza, vida):
   if ataque <= prob:
       print("El ataque impactó")
       return vida-fuerza
+
   else:
        print("El ataque falló")
        return vida
@@ -43,6 +33,8 @@ enemigo = leerEnemigo(a)
 vida = 30
 prob = 80
 fuerza = 3
+probPotenciada = 50
+fuerzaPotenciada = 7
 
 
 while enemigo != None and vida > 0:
@@ -51,20 +43,24 @@ while enemigo != None and vida > 0:
    print(f"Enemigo:{ enemigo[0] }, vida: {enemigo[1]}")
 
 
-   decicion = input("que vas a hacer: 1) atacar o 2) curarte?: ")
-   while decicion not in ["1", "2"]:
+   decicion = input("que vas a hacer: 1) atacar , 2) ataque potenciado o 3) curarte?: ")
+   while decicion not in ["1", "2", "3"]:
        print("selecione una opcion correcta")
-       decicion = input("que vas a hacer: 1) atacar o 2) curarte?: ")
+       decicion = input("que vas a hacer: 1) atacar , 2) ataque potenciado o 3) cuararte")
 
 
    if decicion == "1":
        print(f"atacaste al enemigo!")
-       enemigo[1] = calcularAtaque(prob, fuerza, enemigo[1])
+       enemigo[1] = calcularAtaque(probPotenciada, fuerzaPotenciada, enemigo[1])
       
    if decicion == "2":
+    print(f"lanzaste un ataque potenciado!")
+    enemigo[1] = calcularAtaque(probPotenciada, fuerzaPotenciada, enemigo[1])
+
+   if decicion == "3":
        print(f"te curaste ahora tienes {vida + 5} de vida!")
        vida = vida + 5
-
+      
 
    if enemigo[1] <= 0:
        print(f"derrotaste a {enemigo[0]}")
