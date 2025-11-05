@@ -23,19 +23,15 @@ def calcularAtaque(prob, fuerza, vida):
        print("El ataque falló")
        return vida
 
-
 a = open ("enemigos.txt", "r")
 
-
 enemigo = leerEnemigo(a)
-
 
 vida = 30
 prob = 80
 fuerza = 3
 probPotenciada = 50
 fuerzaPotenciada = 7
-
 
 while enemigo != None and vida > 0:
    print(f"vida: {vida}")
@@ -47,7 +43,6 @@ while enemigo != None and vida > 0:
    while decicion not in ["1", "2", "3"]:
        print("selecione una opcion correcta")
        decicion = input("que vas a hacer: 1) atacar , 2) ataque potenciado o 3) cuararte")
-
 
    if decicion == "1":
        print(f"atacaste al enemigo!")
@@ -78,3 +73,4 @@ else:
   print("ganaste")
 
 a.close()
+
