@@ -1,5 +1,34 @@
 import random
 
+def leerItems():
+    items = []
+    try: 
+        with open("items.txt", "r") as f:
+            while True:
+                nombre = f.readline().strip()
+                if not nombre:
+                    break
+                tipo = f.readline().strip()
+                cantidad = int(f.readline().strip())
+                items.append([nombre, tipo, cantidad])
+    except FileNotFoundError:
+        print("No se encontró el archivo items.txt. No tendrás items.")
+    return items
+   
+def usarItem(item, items, vida, fuerza, vidaMax):
+    if item[1] == "Curar":
+        print(f"Usaste el item {item[0]}, que cura {item[2]} puntos.")
+        vida += item[2]
+        if vida > vidaMax:
+            vida = vidaMax
+            print(f"Como superaste el  limite de vida, quedaste con {vida}")
+        else:
+            print(f"Quedaste con {vida}")
+    elif item[1] == "Atacar":
+        print(f"Usaste el item {item[0]}, que aumenta tu fuerza en {item[2]}.")
+        fuerza += item[2]
+    items.remove(item)
+    return vida, fuerza
 
 def leerEnemigo(archivo):
    nombre = archivo.readline().strip()
