@@ -55,89 +55,83 @@ def calcularAtaque(prob, fuerza, vida):
        print("El ataque falló")
        return vida
 
+a = open ("enemigos.txt", "r")
 
-while True:
+enemigo = leerEnemigo(a)
+items = leerItems()
 
-    a = open ("enemigos.txt", "r")
-
-    enemigo = leerEnemigo(a)
-    items = leerItems()
-
-    vida = 30
-    prob = 80
-    fuerza = 3
-    probPotenciada = 50
-    fuerzaPotenciada = 7
+vida = 30
+prob = 80
+fuerza = 3
+probPotenciada = 50
+fuerzaPotenciada = 7
 
 
-    while enemigo != None and vida > 0:
-        print(f"vida: {vida}")
-        # Enemigo: Esqueleto, vida: 12
-        print(f"Enemigo:{ enemigo[0] }, vida: {enemigo[1]}")
+while enemigo != None and vida > 0:
+    print(f"vida: {vida}")
+    # Enemigo: Esqueleto, vida: 12
+    print(f"Enemigo:{ enemigo[0] }, vida: {enemigo[1]}")
 
 
-        decicion = input("que vas a hacer: 1) atacar ,2) ataque potenciado ,3) curarte? o 4)usar un item : ")
-        while decicion not in ["1", "2", "3", "4"]:
-            print("selecione una opcion correcta")
-            decicion = input("que vas a hacer: 1) atacar , 2) ataque potenciado ,3) cuararte o 4)usar un item : ")
+    decicion = input("que vas a hacer: 1) atacar ,2) ataque potenciado ,3) curarte? o 4)usar un item : ")
+    while decicion not in ["1", "2", "3", "4"]:
+        print("selecione una opcion correcta")
+        decicion = input("que vas a hacer: 1) atacar , 2) ataque potenciado ,3) cuararte o 4)usar un item : ")
 
-        turno_cancelado = False
-        if decicion == "1":
-            print(f"atacaste al enemigo!")
-            enemigo[1] = calcularAtaque(prob, fuerza, enemigo[1])
-           
-        elif decicion == "2":
-                print(f"lanzaste un ataque potenciado!")
-                enemigo[1] = calcularAtaque(probPotenciada, fuerzaPotenciada, enemigo[1])
+    turno_cancelado = False
+    if decicion == "1":
+        print(f"atacaste al enemigo!")
+        enemigo[1] = calcularAtaque(prob, fuerza, enemigo[1])
+       
+    elif decicion == "2":
+            print(f"lanzaste un ataque potenciado!")
+            enemigo[1] = calcularAtaque(probPotenciada, fuerzaPotenciada, enemigo[1])
 
-        elif decicion == "3":
-                print(f"te curaste ahora tienes {vida + 5} de vida!")
-                vida = vida + 5
-           
-        elif decicion == "4":
-            turno_cancelado = True
-           
-            if not items:
-                 print("¡No tienes items para usar!")
-            else:
-                 print("Elige un item (0 para cancelar):")
-                 for i, item in enumerate(items):
-                     print(f" {i+1}) {item[0]}")
-               
-                 while True: # Bucle para elegir el item
-                     try:
-                         item_elegido = int(input("Tu elección: "))
-                         if 0 < item_elegido <= len(items):
-                            # Elige un item válido
-                             item_a_usar = items[item_elegido - 1]
-                             vida = usarItem(item_a_usar, items, vida)
-                             break # Rompe el bucle de elegir item
-                         elif item_elegido == 0:
-                            # Cancela la selección de item
-                             print("Cancelaste el uso de items.")
-                             turno_cancelado = False
-                             break # Rompe el bucle de elegir item
-                         else:
-                             print(f"Error: Elige un número entre 0 y {len(items)}")
-                     except ValueError:
-                         print("Error: Ingresa solo números.")
-
-        if not turno_cancelado:
-            if enemigo[1] <= 0:
-                print(f"derrotaste a {enemigo[0]}")
-                enemigo = leerEnemigo(a)
-                if enemigo != None:
-                    print(f"aparecio otro enemigo!{enemigo[0]}")
-            else:
-                print(f"{enemigo[0]} ataca!")
-                vida = calcularAtaque(enemigo[3], enemigo[2],vida)
-
-
+    elif decicion == "3":
+            print(f"te curaste ahora tienes {vida + 5} de vida!")
+            vida = vida + 5
+       
+    elif decicion == "4":
+        turno_cancelado = True
+       
+        if not items:
+             print("¡No tienes items para usar!")
         else:
-          if vida <= 0:
-            print("perdiste")
-          else:
-            print("ganaste")
-          a.close()
-          break
-    
+             print("Elige un item (0 para cancelar):")
+             for i, item in enumerate(items):
+                 print(f" {i+1}) {item[0]}")
+           
+             while True: # Bucle para elegir el item
+                 try:
+                     item_elegido = int(input("Tu elección: "))
+                     if 0 < item_elegido <= len(items):
+                        # Elige un item válido
+                         item_a_usar = items[item_elegido - 1]
+                         vida = usarItem(item_a_usar, items, vida)
+                         break # Rompe el bucle de elegir item
+                     elif item_elegido == 0:
+                        # Cancela la selección de item
+                         print("Cancelaste el uso de items.")
+                         turno_cancelado = False
+                         break # Rompe el bucle de elegir item
+                     else:
+                         print(f"Error: Elige un número entre 0 y {len(items)}")
+                 except ValueError:
+                     print("Error: Ingresa solo números.")
+
+    if not turno_cancelado:
+        if enemigo[1] <= 0:
+            print(f"derrotaste a {enemigo[0]}")
+            enemigo = leerEnemigo(a)
+            if enemigo != None:
+                print(f"aparecio otro enemigo!{enemigo[0]}")
+        else:
+            print(f"{enemigo[0]} ataca!")
+            vida = calcularAtaque(enemigo[3], enemigo[2],vida)
+            
+if vida <= 0:
+    print("_ perdiste _")
+elif enemigo == None:
+    print("* ¡ganaste! *")
+
+a.close()
