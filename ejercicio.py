@@ -112,7 +112,7 @@ while enemigo != None and vida > 0:
                      elif item_elegido == 0:
                         # Cancela la selección de item
                          print("Cancelaste el uso de items.")
-                         turno_cancelado = False
+                         turno_cancelado = True
                          break # Rompe el bucle de elegir item
                      else:
                          print(f"Error: Elige un número entre 0 y {len(items)}")
